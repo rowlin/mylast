@@ -12,10 +12,10 @@
 */
 
 Route::get('/','HomeController@start');
-Route::get('today', 'HomeController@today');
+Route::get('today', 'HomeController@start');
 Route::get('/tomorrow', 'HomeController@tomorrow');
 Route::get('/later', 'HomeController@later');
-
+Route::get('/all', 'HomeController@all');
 
 Auth::routes();
 

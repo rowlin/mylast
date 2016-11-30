@@ -44,7 +44,7 @@ elixir(function(mix) {
         paths.fontawesome + "/css/font-awesome.css",
     ],'public/css/all.css', './');
 
-    mix.copy('bower_components/fontawesome/fonts', 'public/fonts');
+    mix.copy('bower_components/font-awesome/fonts', 'public/fonts');
     mix.copy('bower_components/bootstrap-css/fonts/bootstrap', 'public/fonts');
 });
 

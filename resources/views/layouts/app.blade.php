@@ -42,6 +42,7 @@
                         <li><a href="{{ url('/today') }}">Сегодня</a></li>
                         <li><a href="{{ url('/tomorrow') }}">Завтра</a></li>
                         <li><a href="{{ url('/later') }}">Потом</a></li>
+                        <li><a href="{{ url('/all') }}">ВСЕ</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
