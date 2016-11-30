@@ -17,6 +17,10 @@ Route::get('/tomorrow', 'HomeController@tomorrow');
 Route::get('/later', 'HomeController@later');
 Route::get('/all', 'HomeController@all');
 
+Route::post('/like', 'LikeController@like')->name('like') ;
+Route::get('like/{id}','LikeController@count')->name('like_count');
+
+
 Auth::routes();
 
 Route::group(['middleware =>web'], function() {

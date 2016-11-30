@@ -13,7 +13,11 @@ class Like extends Migration
      */
     public function up()
     {
-        //
+         Schema::create('like', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('ticket_id');
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class Like extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('like');
     }
 }
