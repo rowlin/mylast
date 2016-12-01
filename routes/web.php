@@ -18,8 +18,9 @@ Route::get('/later', 'HomeController@later');
 Route::get('/all', 'HomeController@all');
 
 Route::post('/like', 'LikeController@like')->name('like') ;
+Route::post('/adduser','UserController@adduser')->name('add_user');
+/*Удалить*/
 Route::get('like/{id}','LikeController@count')->name('like_count');
-
 
 Auth::routes();
 

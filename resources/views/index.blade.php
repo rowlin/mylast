@@ -5,25 +5,34 @@
     @if($errors->any())
         <h4>{{$errors->first()}}</h4>
     @endif
-
-@if (\Session::has('msg'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{!! \Session::get('msg') !!}</li>
-        </ul>
-    </div>
-@endif
-
     <div class="container">
+
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+
+                @if (\Session::has('message'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('message') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+
+
+                @if (\Session::has('message-alert'))
+                    <div class="alert alert-error">
+                        <ul>
+                            <li>{!! \Session::get('message-alert') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+
+
                 @if(isset($tickets))
                 @foreach($tickets as $ticket)
+
                     <section>
 
-                        <div class="col-md-2">
-                            photo
-                        </div>
 
                         <div class="col-md-8">
                         <h2>{{$ticket->name}}</h2>
@@ -31,7 +40,7 @@
                         {{ $ticket->start}}  -  {{$ticket->end}}
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                         осталось столько то времени
 
 
@@ -44,15 +53,12 @@
                                 {!! Form::close() !!}
 
                              </div><!--form-group-->
-                        <!--a href="">Поделиться</a-->
-                        <!--поделиться - социальные кнопки использовать -->
-                        <!--a href="">Напомнить</a-->
 
                     <div class="form-group">
-                        {!! FOrm::open(['']) !!}}
-                        <form method="post" action="commen/{id}">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>
-                        </form>
+                        {!! Form::open(['method' =>'POST', 'route' => 'add_user']) !!}
+                        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                        <button class="fa fa-user-plus" aria-hidden="true" type="submit" ></button>
+                        {!! Form::close() !!}
                     </div><!--form-group-->
 
                             <div class="form-group">
@@ -61,7 +67,7 @@
                             </form>
                                 </div><!--form-group-->
                             </div><!--form-inline-->
-                            </div><!---col-md-2->
+                            </div><!---col-md-2-->
 
                     </section>
                 @endforeach
@@ -70,7 +76,10 @@
                     <h2>К сожалению заявок нет, но вы можете <a href="{{ url('ticket/create') }}">создать тикет</a> </h2>
 
                 @endif
+
+
             </div>
         </div>
+
     </div>
 @endsection

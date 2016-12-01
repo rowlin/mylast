@@ -29,11 +29,11 @@ class LikeController extends Controller
             $liked = Like::where('user_id', $data['user_id'])->where('ticket_id', $data['ticket_id'])->first();
             if($liked){
                 Like::where('id',$liked->id)->delete();
-                return Redirect::back()->with('msg', 'Liked -1');
+                return Redirect::back()->with('message', 'Liked -1');
             }else Like::create($data);
-            return Redirect::back()->with('msg', 'Liked +1 ');
+            return Redirect::back()->with('message', 'Liked +1 ');
         }
         else
-            return Redirect::back()->withErrors(['msg', 'Вы не авторизованы.']);
+            return Redirect::back()->withErrors(['message', 'Вы не авторизованы.']);
     }
 }

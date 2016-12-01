@@ -25,6 +25,10 @@ class User extends Authenticatable
      */
     protected $hidden = ['password', 'remember_token',];
 
+    public function tickets(){
+        return $this->belongsToMany('App\Ticket','pivotUserTicket')->withPivot( 'user_id', 'ticket_id');
+    }
+
     public function roles(){
          return $this->belongsToMany('App\Role', 'role_users','role_id', 'user_id' );
     }
