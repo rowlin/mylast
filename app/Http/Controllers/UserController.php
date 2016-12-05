@@ -13,7 +13,7 @@ class UserController extends Controller
 public function checkUserTicket($data){
 //проверим не пустые ди поля
     $this->validate($data, [
-        'user_id' => 'required',
+        'user_id' => 'user_id',
         'ticket_id' => 'required',
     ]);
 
@@ -31,6 +31,9 @@ public function checkUserTicket($data){
             'user_id' => Auth::id(),
             'ticket_id' => $request->ticket_id,
         ];
+         if($data['user_id'] == null) {
+             return redirect('register')->with('message', 'Зарегистрируйтесь');
+         }
         //проверить записан ли пользоватиель на данное событие
         $user = User::where('id', $data['user_id'])->first();
         $message = "";

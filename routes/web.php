@@ -17,12 +17,21 @@ Route::get('/tomorrow', 'HomeController@tomorrow');
 Route::get('/later', 'HomeController@later');
 Route::get('/all', 'HomeController@all');
 
-Route::post('/like', 'LikeController@like')->name('like') ;
-Route::post('/adduser','UserController@adduser')->name('add_user');
+
 /*Удалить*/
 Route::get('like/{id}','LikeController@count')->name('like_count');
+Route::get('test', 'HomeController@test');
+Route::post('test', 'HomeController@test');
+
 
 Auth::routes();
+
+
+    Route::post('/like', 'LikeController@like')->name('like') ;
+    Route::post('/adduser','UserController@adduser')->name('add_user');
+    Route::get('/comment/{id?}','CommentController@index')->where(['id' => '[0-9]*'])->name('view_comment');
+    Route::post('comment/create', 'CommentController@create')->name('comment.create');
+
 
 Route::group(['middleware =>web'], function() {
     Route::get('/admin', [
@@ -31,6 +40,7 @@ Route::group(['middleware =>web'], function() {
         'middleware' => 'roles',
         'roles'=> 'Admin'
     ]);
+
 
     Route::post('/admin/assign', [
         'uses' => 'AdminController@postAdminAssignRoles',

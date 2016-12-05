@@ -8,8 +8,7 @@ use Carbon\Carbon;
 
 class HomeController extends Controller
 {
-
-
+    
     /**
      * Главная страница
      * выводим все тикеты активные сегодня
@@ -64,12 +63,12 @@ class HomeController extends Controller
         foreach ($t as $ticket){
             $later = $this->later_value(1);
             $start = $this->parse($ticket->start);
-            if($later >= $start )
-               $tickets[] = $ticket;
+            //strototime для уверенности сравнения
+            if(strtotime($start) >= strtotime($later) ) {
+                $tickets[] = $ticket;
+            }
         }
-        
-        //where('start','>=', $later)->get();
-        return view('index', compact('tickets'));
+    return view('index', compact('tickets'));
     }
 
     public function all(){

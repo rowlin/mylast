@@ -10,6 +10,11 @@ class Ticket extends Model
     protected $table = 'ticket';
 
     public function users(){
-        return $this->belongsToMany('App\User','pivotUserTicket', 'user_id', 'ticket_id');
+        return $this->belongsToMany('App\User','pivotUserTicket')->withPivot('user_id');
     }
+    
+    public function comments(){
+        return $this->hasMany(Comment::class, 'ticket_id');
+    }
+    
 }

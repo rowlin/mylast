@@ -4,21 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Last') }}</title>
-
     <!-- Styles -->
     <link href="/css/all.css" rel="stylesheet">
     @yield('style')
     <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
 </head>
 <body>
     <div id="app">
@@ -80,7 +70,34 @@
                 </div>
             </div>
         </nav>
+        <!--errors-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    @if (\Session::has('message'))
+                        <div class="alert alert-success">
+                            <ul>
+                                <li>{!! \Session::get('message') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                    @if (\Session::has('message-alert'))
+                        <div class="alert alert-error">
+                            <ul>
+                                <li>{!! \Session::get('message-alert') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
 
+                    @if($errors->any())
+                        <h4>{{$errors->first()}}</h4>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+
+        <!--errors-->
         @yield('content')
     </div>
     <!-- Scripts -->
