@@ -49,6 +49,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/ticket">Мои тикеты</a></li>
+                                    <li><a href="/profile">Профиль</a></li>
                                     @if(Auth::user()->inRole('Admin'))
                                         <li><a href="{{ url('/admin') }}">Роли</a></li>
                                     @endif

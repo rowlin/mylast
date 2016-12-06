@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
                     <a href="ticket/create" class="btn">Создать тикет</a>
-                    <a class="#">Редактировать профиль</a>
+                    <a href="/profile/edit">Редактировать профиль</a>
                 </div>
                         <!-- The Current User Can't Update The Post -->
 

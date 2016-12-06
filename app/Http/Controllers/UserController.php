@@ -10,8 +10,36 @@ use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
 
-public function checkUserTicket($data){
-//проверим не пустые ди поля
+    public function update(Request $request){
+        $user = User::findOrFail(Auth::id());
+        //where('id', Auth::id())->first();
+
+        $this->validate($request, [
+        'name' => 'required',
+        'age'  =>  'required',
+        'sex'  =>  'required',
+        'sity' => 'required',
+        'phone' => 'required',
+        ]);
+        $input = $request->all();
+        $user->fill($input)->save();
+        $message ='Информация изменена';
+        return redirect('profile');
+    }
+
+    public function edit(){
+      $user = User::findOrFail(Auth::id());
+         // ::where('id', Auth::id())->first();
+      return view('user.edit', compact('user'));
+    }
+
+    public function profile(){
+        $user = User::where('id', Auth::id())->first();
+        return view('user.index', compact('user'));
+    }
+
+    public function checkUserTicket($data){
+    //проверим не пустые ди поля
     $this->validate($data, [
         'user_id' => 'user_id',
         'ticket_id' => 'required',
@@ -20,11 +48,9 @@ public function checkUserTicket($data){
    //->where('user_id',$data['user_id'])->where('ticket_id', $data['ticket_id'])->
 }
 
-
     /*
      * ticket_id
      */
-
     public function adduser(Request $request)
     {
         $data = [
@@ -37,21 +63,20 @@ public function checkUserTicket($data){
         //проверить записан ли пользоватиель на данное событие
         $user = User::where('id', $data['user_id'])->first();
         $message = "";
-        if(count($user->tickets)==0){
-            $user->tickets()->attach($data['ticket_id']);
-            $message= "Вы подписались";
-        }else {
+        $My_count = 0;
             foreach ($user->tickets as $ticket) {
                 if ($ticket->pivot->ticket_id == $data['ticket_id']) {
                     $user->tickets()->detach($data['ticket_id']);
                     $message = "Вы отписались";
                     break;
                 }
-
-                $user->tickets()->attach($data['ticket_id']);
-                $message = "Вы подписались";
+            $My_count++;
             }
+        if($My_count == count($user->tickets)){
+            $user->tickets()->attach($data['ticket_id']);
+            $message = "Вы записались";
         }
+
         return Redirect::back()->with('message', $message);
 
     }

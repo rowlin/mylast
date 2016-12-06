@@ -25,6 +25,13 @@ class User extends Authenticatable
      */
     protected $hidden = ['password', 'remember_token',];
 
+    public  function getSexAttribute($value){
+        if($value == 1) return "Мужской";
+        else if($value == 0) return "Жунский";
+        else return false;
+    }
+
+
     public function comments(){
         return $this->hasMany(Comment::class, 'user_id');
     }

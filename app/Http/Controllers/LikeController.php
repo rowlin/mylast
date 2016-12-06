@@ -16,12 +16,13 @@ class LikeController extends Controller
 
     public function like(Request $like){
 
-        if(Auth::check()){
             $data = [
                 'ticket_id' => $like->ticket_id,
                 'user_id' => Auth::id(),
             ];
-            
+            if($data['user_id'] == null) {
+                return redirect('register')->with('message', 'Зарегистрируйтесь');
+             }
             $liked = Like::where('user_id', $data['user_id'])->where('ticket_id', $data['ticket_id'])->first();
             if($liked){
                 Like::where('id',$liked->id)->delete();
@@ -29,7 +30,5 @@ class LikeController extends Controller
             }else Like::create($data);
             return Redirect::back()->with('message', 'Liked +1 ');
         }
-        else
-            return Redirect::back()->withErrors(['message', 'Вы не авторизованы.']);
-    }
+
 }

@@ -18,15 +18,7 @@ Route::get('/later', 'HomeController@later');
 Route::get('/all', 'HomeController@all');
 
 
-/*Удалить*/
-Route::get('like/{id}','LikeController@count')->name('like_count');
-Route::get('test', 'HomeController@test');
-Route::post('test', 'HomeController@test');
-
-
-Auth::routes();
-
-
+    Auth::routes();
     Route::post('/like', 'LikeController@like')->name('like') ;
     Route::post('/adduser','UserController@adduser')->name('add_user');
     Route::get('/comment/{id?}','CommentController@index')->where(['id' => '[0-9]*'])->name('view_comment');
@@ -52,15 +44,44 @@ Route::group(['middleware =>web'], function() {
     Route::get('/home', [
         'uses' => 'HomeController@index',
         'as' => 'home',
-        'roles' => ''
+        'middleware' => 'roles',
+        'roles' => 'User'
     ]);
 
-    //Route::get('/ticket/create', 'TicketController@create');
-    //Route::get('/ticket', 'TicketController@index');
-    //Route::post('/ticket/store', 'TicketController@store');
+    Route::get('/profile', [
+        'uses' => 'UserController@profile',
+        'as' =>'profile',
+        'middleware' => 'roles',
+        'roles' => 'User'
+    ]);
+
+    Route::get('/profile/edit', [
+        'uses' => 'UserController@edit',
+        'as' =>'profile.edit',
+        'middleware' => 'roles',
+        'roles' => 'User'
+    ]);
+
+    Route::post('/profile/update', [
+        'uses' => 'UserController@update',
+        'as' =>'profile.update',
+        'middleware' => 'roles',
+        'roles' => 'User'
+    ]);
+
+
+    Route::get('/profile/{id}/ban', [
+        'uses' => 'UserController@ban',
+        'as' =>'profile.ban',
+        'middleware' => 'roles',
+        'roles' => 'Admin'
+    ]);
+
+
+
+
+
+
 });
 
-
 Route::resource('ticket', 'TicketController');
-
-//Route::get('/ticket','' )
