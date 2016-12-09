@@ -19,18 +19,18 @@ Route::get('/all', 'HomeController@all');
 
 
     Auth::routes();
-    Route::post('/like', 'LikeController@like')->name('like') ;
+    Route::post('/like','LikeController@like')->name('like') ;
     Route::post('/adduser','UserController@adduser')->name('add_user');
     Route::get('/comment/{id?}','CommentController@index')->where(['id' => '[0-9]*'])->name('view_comment');
     Route::post('comment/create', 'CommentController@create')->name('comment.create');
 
 
-Route::group(['middleware =>web'], function() {
+Route::group(['middleware => web'], function() {
     Route::get('/admin', [
         'uses' => 'AdminController@admin',
         'as' => 'admin',
         'middleware' => 'roles',
-        'roles'=> 'Admin'
+        'roles'=> 'User'
     ]);
 
 
@@ -38,7 +38,7 @@ Route::group(['middleware =>web'], function() {
         'uses' => 'AdminController@postAdminAssignRoles',
         'as' => 'admin.assign',
         'middleware' => 'roles',
-        'roles'=> 'Admin'
+        'roles'=> 'User'
     ]);
 
     Route::get('/home', [
@@ -61,6 +61,7 @@ Route::group(['middleware =>web'], function() {
         'middleware' => 'roles',
         'roles' => 'User'
     ]);
+
 
     Route::post('/profile/update', [
         'uses' => 'UserController@update',

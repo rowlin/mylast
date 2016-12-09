@@ -12,7 +12,6 @@ class UserController extends Controller
 
     public function update(Request $request){
         $user = User::findOrFail(Auth::id());
-        //where('id', Auth::id())->first();
 
         $this->validate($request, [
         'name' => 'required',

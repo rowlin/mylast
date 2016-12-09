@@ -41,11 +41,13 @@
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Вход</a></li>
                             <li><a href="{{ url('/register') }}">Регистрация</a></li>
+                            <li><a href="#">Город : {!!  Helper::getGeoLocation() !!}</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
+
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/ticket">Мои тикеты</a></li>
@@ -66,6 +68,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li><a href="#">Город : {!!  Helper::getGeoLocation() !!}</a></li>
                         @endif
                     </ul>
                 </div>

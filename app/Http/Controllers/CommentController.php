@@ -21,7 +21,7 @@ class CommentController extends Controller
     public function create(Request $request){
         $this->validate( $request, [
             'ticket_id' => 'required',
-            'user_id' => 'user_id',
+            'user_id' => 'required',
             'comment'=> 'required',
             'parent_id' => 'required'
                 ]);

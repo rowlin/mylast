@@ -37,8 +37,6 @@
 
 
 
-
-
 @section('content')
     <script type="text/javascript">
         function getTimeRemaining(endtime) {
@@ -111,13 +109,14 @@
                         <div class="form-inline">
                             <div class="form-group" style="padding:3px;">
                                 <div class="form-group">
-                                    {!! Form::open(['method' =>'POST', 'route' => 'like']) !!}
-                                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                                    {!! Form::open(['method' =>'POST', 'route' => 'like',  'id' => 'like-form']) !!}
+                                    <input type="hidden" name="ticket_id" id="ticket_id"  value="{{ $ticket->id }}">
                                     <button class="fa fa-heart" aria-hidden="true" type="submit" ></button>
                                     {!! Form::close() !!}
                                 </div><!--form-group-->
                             <div class="form-group">
                                 {!! Helper::getLikeCount($ticket->id) !!}
+                                <div id="postRequestData"></div>
                             </div>
                         </div>
 
@@ -141,22 +140,19 @@
                                 </a>
                                 </div><!--form-group-->
                             <div class="form-group">
-                            0
+                            {!! Helper::getCommentCount($ticket->id) !!}
                             </div>
                             </div>
                             </div><!--form-inline-->
                             </div><!---col-md-2-->
                             </section>
                     </div>
-                        <script>
+              <script>
                             var deadline = new Date('{{ $ticket->end }}');
                             initializeClock('clockdiv{{  $ticket->id}}', deadline);
               </script>
+
                             <hr>
-
-
-
-
                 @endforeach
                     @else
 
@@ -169,4 +165,24 @@
         </div>
 
     </div>
+@endsection
+
+
+@section('script')
+    <script>
+        jQuery( document ).ready( function() {
+
+            $( '#like-form' ).submit(function() {
+                $.post('like',{
+                            "_token": $( this ).find( 'input[name=_token]' ).val(),
+                            "ticket_id": $( '#ticket_id' ).val()
+                        },
+                        function( data ) {
+                       console.log(data);
+                        });
+
+                $('postRequestData').html(data);
+            });
+        });
+    </script>
 @endsection

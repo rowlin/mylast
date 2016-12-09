@@ -179,6 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Scriptixru\SypexGeo\SypexGeoServiceProvider::class,
 
     ],
 
@@ -194,6 +195,7 @@ return [
     */
 
     'aliases' => [
+        'SypexGeo' => Scriptixru\SypexGeo\SypexGeoFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
         'Form' => Collective\Html\FormFacade::class,

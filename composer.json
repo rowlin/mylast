@@ -10,7 +10,8 @@
         "laravel/socialite": "^2.0" ,
         "anhskohbo/no-captcha": "2.*",
         "socialiteproviders/vkontakte": "^2.0",
-        "laravelcollective/html": "^5.3"
+        "laravelcollective/html": "^5.3",
+        "scriptixru/sypexgeo": "0.2.*@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -18,14 +18,14 @@ class Ticket extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('name');
-            $table->string('city');
+            $table->string('city')->default(0);
             $table->text('desc');
-            $table->string('tags');
+            $table->string('tags')->default(0);
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->integer('who_sex');
-            $table->integer('who_age');
-            $table->boolean('public');
+            $table->integer('who_sex')->default(0);
+            $table->integer('who_age')->default(0);
+            $table->boolean('public')->default(1);
             $table->timestamps();
         });
 

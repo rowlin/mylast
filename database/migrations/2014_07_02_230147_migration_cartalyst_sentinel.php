@@ -37,7 +37,6 @@ class MigrationCartalystSentinel extends Migration
             $table->string('name');
             $table->text('permissions')->nullable();
             $table->timestamps();
-
             $table->engine = 'InnoDB';
             $table->unique('slug');
         });
@@ -53,16 +52,17 @@ class MigrationCartalystSentinel extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name', 255);
             $table->string('email');
             $table->string('password');
+            $table->string('county')->default(0);
             $table->string('sity')->default(0);
-            $table->string('phone')->default(0);
             $table->string('sex')->default(0);
+            $table->string('phone')->default(0);
+            $table->boolean('phone_public')->default(0);
+            $table->boolean('email_public')->default(0);
             $table->string('vk_id')->default(0);
             $table->string('img')->default(0);
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->engine = 'InnoDB';
