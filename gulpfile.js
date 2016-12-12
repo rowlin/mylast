@@ -20,6 +20,7 @@ var paths = {
     'app':'/public/css',
     'tags': '/bower_components/bootstrap-tagsinput/dist',
     'fontawesome': '/bower_components/font-awesome',
+    'timepicker' :'/bower_components/bootstrap-timepicker',
     'datetimepicker':'/bower_components/eonasdan-bootstrap-datetimepicker/build'
 }
 
@@ -30,6 +31,7 @@ elixir(function(mix) {
         paths.moment + '/moment-with-locales.min.js',
         paths.datetimepicker + '/js/bootstrap-datetimepicker.min.js',
         paths.bootstrap + '/js/bootstrap.min.js',
+        paths.timepicker+ '/js/bootstrap-timepicker.js',
       //  paths.select2 + "/js/select2.full.min.js",
         paths.tags + "/bootstrap-tagsinput.min.js",
     ],'public/js/all.js', './')
@@ -40,6 +42,7 @@ elixir(function(mix) {
         paths.datetimepicker + "/css/bootstrap-datetimepicker.min.css",
         paths.tags + "/bootstrap-tagsinput.min.css",
         paths.app + "/app.css",
+        paths.timepicker + "/css/convert.css",
         // paths.select2 + "/css/select2.min.css",
         paths.fontawesome + "/css/font-awesome.css",
     ],'public/css/all.css', './');

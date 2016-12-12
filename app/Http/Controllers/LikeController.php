@@ -24,35 +24,31 @@ class LikeController extends Controller
             ) );
         }
 
+
             $data = [
                 'ticket_id' => Input::get('ticket_id'),
                 'user_id' => Auth::id(),
             ];
+
             if($data['user_id'] == null) {
-                return redirect('register')->with('message', 'Зарегистрируйтесь');
+                return redirect('register')->with('message-alert', 'Зарегистрируйтесь');
              }
             $liked = Like::where('user_id', $data['user_id'])->where('ticket_id', $data['ticket_id'])->first();
             if($liked){
                 Like::where('id',$liked->id)->delete();
 
-                $response = array(
-                    'status' => 'success',
-                    'msg' => 'Like -1',
-                );
+                    $msg = "Like -1";
+                return response()->json(array('msg'=> $msg), 200);
 
-                return Response::json( $response );
 
 
                 //return Redirect::back()->with('message', 'Liked -1');
             }else {
                 Like::create($data);
                 //return Redirect::back()->with('message', 'Liked +1 ');
-                $response = array(
-                    'status' => 'success',
-                    'msg' => 'Like +1',
-                );
 
-                return Response::json($response);
+                       $msg = "Like +1";
+                return response()->json(array('msg'=> $msg), 200);
             }
     }
 

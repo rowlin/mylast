@@ -1,7 +1,3 @@
-
-
-
-
 <div class="form-group">
     <label for="name"  class="control-label">Название:</label>
     {!! Form::text('name', null, array('placeholder' => 'Название события','class' => 'form-control')) !!}
@@ -17,30 +13,63 @@
     {!! Form::text('tags', null, array('placeholder' => 'Введите теги','class' => 'form-control','data-role' => 'tagsinput')) !!}
 </div>
 
-
+<div class="container">
 <div class="form-group">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <label for="start" class="control-label">Начало:</label>
-        <div class='input-group date' id='start'>
-            <input type='text' name="start" class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-        </div><!--input-group date-->
-    </div><!--col-sm-6-->
+       <div class="input-group">
+           <button type="button" class="btn btn-primary" onclick="today()" style="width: 100px;">Cегодня</button>
+       </div>
+          <div class="input-group">
+            <button type="button" class="btn btn-primary " onclick="tomorrow()" style="width: 100px;">Завтра</button>
+          </div>
+        <div class="input-form" >
+       <button type="button" class="btn btn-primary" onclick="later()" style="width: 100px;">Потом</button>
+         </div>
 
-    <div class="col-sm-6">
-        <label for="end" class="control-label">Конец:</label>
-        <div class='input-group date' id='end'>
-            <input type='text' name="end" class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-        </div><!--input-group date-->
-    </div><!--col-sm-6-->
+    </div><!--col-sm-4-->
+    <div class="form-group" >
+    <div class="col-sm-4">
+        <div class="clockdiv" >
+            <div>
+                <div class="up-hours">+</div>
+                <input class="hours" value="1" readonly/>
+                <div class="down-hours">-</div>
+                <div class="smalltext">Часов</div>
+            </div>
+            <div>
+                <div class="up-minutes">+</div>
+                <input class="minutes" value='0' readonly/>
+                <div class="down-minutes">-</div>
+                <div class="smalltext">Минут</div>
+            </div>
+        </div>
+    </div><!--col-sm-4-->
+</div>
+ <div class="form-group">
+    <div class="col-sm-4">
+        <div class="clockdiv" >
+
+            <div>
+                <div class="up-hours">+</div>
+                <input class="hours" value="1"  readonly/>
+            <div class="down-hours">-</div>
+                <div class="smalltext">Часов</div>
+            </div>
+
+            <div>
+                <div class="up-minutes">+</div>
+                <input class="minutes" value='0' readonly/>
+                <div class="down-minutes">-</div>
+                <div class="smalltext">Минут</div>
+            </div>
+        </div>
+    </div><!--col-sm-4-->
+</div>
+
 </div><!--form-group-->
-
-<div class="form-group" style="padding:10px;"><!--для кого-->
+</div>
+<div class="form-group"><!--для кого-->
     <div class="col-sm-4">
         <label for="who_sex" class="control-label">С кем</label>
         <!--Form::select('who_sex', array('L' => 'Large', 'S' => 'Small'))-->

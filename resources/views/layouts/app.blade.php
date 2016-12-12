@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Last') }}</title>
     <!-- Styles -->
-    <link href="/css/all.css" rel="stylesheet">
+    <link href="{{url('/css/all.css')}}" rel="stylesheet">
     @yield('style')
     <!-- Scripts -->
 </head>

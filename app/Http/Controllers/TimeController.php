@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class TimeController extends Controller
 {
     public function today(){
-        $t_now = Ticket::where('start', Carbon::now() )->get();
+        $t_now = Ticket::where('start',Carbon::now() )->get() ;
         return view('index' , ['tickets' => $t_now]);
     }
 

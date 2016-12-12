@@ -16,7 +16,21 @@ Route::get('today', 'HomeController@start');
 Route::get('/tomorrow', 'HomeController@tomorrow');
 Route::get('/later', 'HomeController@later');
 Route::get('/all', 'HomeController@all');
+Route::get('ajax',function(){
+   return view('test');
+});
+Route::get('/getRequest', function(){
+    if(Request::ajax()){
+        return 'getRequest is loaded ';
+    }
+});
 
+Route::post('/reg', function(){
+    if(Request::ajax()){
+        return Response::json(Request::all());
+    }
+
+});
 
     Auth::routes();
     Route::post('/like','LikeController@like')->name('like') ;

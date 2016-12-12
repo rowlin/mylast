@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-    <style>
 
-        .form-group{
-            margin-top:12px;
-            padding-top:12px;
-        }
-    </style>
 
 @endsection
 
@@ -42,7 +36,63 @@
 
 
     @section('script')
-        <script type="text/javascript">
+
+<script type="application/javascript">
+            $(function(){
+                $('.down-hours').click(function () {
+                    var $hours = $(this).parent().find('.hours');
+                    var count = parseInt($hours.val()) - 1;
+                    count = count < 1 ? 1 : count;
+                    $hours.val(count);
+                    $hours.change();
+                    return false;
+                });
+                $('.up-hours').click(function () {
+                    var $input = $(this).parent().find('input');
+                    var count = parseInt($input.val()) + 1;
+                    count = count >= 24 ? 0 : count;
+                    $input.val(count);
+                    $input.change();
+                    return false;
+                });
+
+                $('.up-minutes').click(function(){
+                    var $input = $(this).parent().find('input');
+                    var count = parseInt($input.val()) + 15;
+                    count = count >= 60 ? 0 : count;
+                    $input.val(count);
+                    $input.change();
+                    return false;
+                });
+
+
+                $('.down-minutes').click(function(){
+                    var $input = $(this).parent().find('input');
+                    var count = parseInt($input.val()) - 15;
+                    count = count < 0 ? 0 : count;
+                    $input.val(count);
+                    $input.change();
+                    return false;
+                });
+            });
+
+    function today() {
+          var now = new Date();
+
+
+    }
+
+    function tomorrow() {
+
+    }
+
+    function later() {
+
+    }
+
+
+</script>
+  <script type="text/javascript">
             $(function () {
                 $('#start').datetimepicker({ 'format': 'YYYY-MM-DD hh:mm:ss', locale:'ru'});
                 $('#end').datetimepicker({

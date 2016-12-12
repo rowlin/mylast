@@ -2,33 +2,14 @@
 
 @section('style')
 <style type='text/css'>
-    .clockdiv{
-        color: #000;
-        display: inline-block;
-        font-weight: 100;
-        text-align: center;
-        font-size: 30px;
-        background: whitesmoke;
-    }
 
-    .clockdiv > div{
-        padding: 2px;
-        border-radius: 3px;
-        display: inline-block;
-    }
-
-    .clockdiv div > span{
-        padding: 7px;
-        border-radius: 3px;
-        background: lightgrey;
-        display: inline-block;
-    }
-
-    .smalltext{
-        padding-top: 5px;
-        font-size: 16px;
-    }
-
+.clockdiv div > input {
+    width: 40px;
+    height: 40px;
+    font-size: 2rem;
+    border: 0px;
+    text-align: center;
+}
 
 
 </style>
@@ -78,6 +59,10 @@
 
     <div class="container">
 
+
+        <div class="box">
+        <div id="msg" style="text-align: center;">Тест</div>
+        </div>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 @if(isset($tickets))
@@ -109,14 +94,10 @@
                         <div class="form-inline">
                             <div class="form-group" style="padding:3px;">
                                 <div class="form-group">
-                                    {!! Form::open(['method' =>'POST', 'route' => 'like',  'id' => 'like-form']) !!}
-                                    <input type="hidden" name="ticket_id" id="ticket_id"  value="{{ $ticket->id }}">
-                                    <button class="fa fa-heart" aria-hidden="true" type="submit" ></button>
-                                    {!! Form::close() !!}
+                                    <button class="fa fa-heart" aria-hidden="true"  id="like" type="submit" value="{{ $ticket->id }}" ></button>
                                 </div><!--form-group-->
                             <div class="form-group">
-                                {!! Helper::getLikeCount($ticket->id) !!}
-                                <div id="postRequestData"></div>
+                                <span id="likeCount">{!! Helper::getLikeCount($ticket->id) !!}</span>
                             </div>
                         </div>
 
@@ -172,16 +153,18 @@
     <script>
         jQuery( document ).ready( function() {
 
-            $( '#like-form' ).submit(function() {
-                $.post('like',{
-                            "_token": $( this ).find( 'input[name=_token]' ).val(),
-                            "ticket_id": $( '#ticket_id' ).val()
-                        },
-                        function( data ) {
-                       console.log(data);
-                        });
 
-                $('postRequestData').html(data);
+
+            $( '#like-form' ).click(function(e) {
+                $.ajax({
+                    type:'POST',
+                    url:'/like',
+                    data:  FormData,
+                    success: function (data){
+                        console.log( $('#like').val());
+                  $("#msg").html(data.msg);
+               }
+                });
             });
         });
     </script>
