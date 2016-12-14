@@ -22,7 +22,7 @@ Route::get('/all', 'HomeController@all');
     Route::post('/addlike','LikeController@like')->name('like') ;
     Route::post('/adduser','UserController@adduser')->name('add_user');
     Route::get('/comment/{id?}','CommentController@index')->where(['id' => '[0-9]*'])->name('view_comment');
-    Route::post('comment/create', 'CommentController@create')->name('comment.create');
+    Route::post('/comment/create', 'CommentController@create')->name('addcomment');
 
 
 Route::group(['middleware => web'], function() {
