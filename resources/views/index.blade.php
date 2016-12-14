@@ -16,8 +16,6 @@
 
 @endsection
 
-
-
 @section('content')
     <script type="text/javascript">
         function getTimeRemaining(endtime) {
@@ -58,8 +56,6 @@
     </script>
 
     <div class="container">
-
-
         <div class="box">
         <div id="msg" style="text-align: center;">Тест</div>
         </div>
@@ -94,29 +90,26 @@
                         <div class="form-inline">
                             <div class="form-group" style="padding:3px;">
                                 <div class="form-group">
-                                    <button class="fa fa-heart" aria-hidden="true"  id="like" type="submit" value="{{ $ticket->id }}" ></button>
+                                    <button class="fa fa-heart" aria-hidden="true" onclick="addlike({{ $ticket->id }})"  type="submit" ></button>
                                 </div><!--form-group-->
                             <div class="form-group">
-                                <span id="likeCount">{!! Helper::getLikeCount($ticket->id) !!}</span>
+                                <span id="likeCount{!! $ticket->id !!}">{!! Helper::getLikeCount($ticket->id) !!}</span>
                             </div>
                         </div>
 
                             <div class="form-group" style="padding:3px;">
 
                             <div class="form-group">
-                        {!! Form::open(['method' =>'POST', 'route' => 'add_user']) !!}
-                        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-                        <button class="fa fa-user-plus" aria-hidden="true" type="submit" ></button>
-                        {!! Form::close() !!}
-                    </div><!--form-group-->
+                        <button class="fa fa-user-plus" aria-hidden="true" type="submit" onclick="invite({{ $ticket->id }})" ></button>
+                            </div><!--form-group-->
                             <div class="form-group">
-                                {!! Helper::getUserCount($ticket->id) !!}
+                                <span id="userCount{!! $ticket->id !!}">{!! Helper::getUserCount($ticket->id) !!}</span>
                             </div>
                             </div>
 
                             <div class="form-group" style="padding:3px;">
                             <div class="form-group">
-<a href="/comment/{{$ticket->id}}">
+                                <a href="/comment/{{$ticket->id}}">
                                 <button class="fa fa-commenting-o" aria-hidden="true" type="submit" ></button>
                                 </a>
                                 </div><!--form-group-->
@@ -148,24 +141,46 @@
     </div>
 @endsection
 
-
 @section('script')
     <script>
-        jQuery( document ).ready( function() {
-
-
-
-            $( '#like-form' ).click(function(e) {
-                $.ajax({
-                    type:'POST',
-                    url:'/like',
-                    data:  FormData,
-                    success: function (data){
-                        console.log( $('#like').val());
-                  $("#msg").html(data.msg);
-               }
-                });
-            });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
+
+        function addlike(id) {
+            $.ajax({
+                type: 'post',
+                url: 'addlike',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'ticket_id': id,
+                },
+                success:function(data){
+                    $("#msg").html(data.msg);
+                    $("#likeCount"+id).html(data.count);
+                }
+            });
+        }
+
+        function invite(id){
+            $.ajax({
+                type: 'post',
+                url: 'adduser',
+                data:{
+                    '_token': $('input[name= _token]').val(),
+                    'ticket_id': id,
+                },
+                success:function (data) {
+                    $('#msg').html(data.msg);
+                    $("#userCount"+id).html(data.count);
+
+                }
+            });
+        }
+
     </script>
 @endsection
+
+

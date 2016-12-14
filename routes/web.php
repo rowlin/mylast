@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,24 +17,9 @@ Route::get('today', 'HomeController@start');
 Route::get('/tomorrow', 'HomeController@tomorrow');
 Route::get('/later', 'HomeController@later');
 Route::get('/all', 'HomeController@all');
-Route::get('ajax',function(){
-   return view('test');
-});
-Route::get('/getRequest', function(){
-    if(Request::ajax()){
-        return 'getRequest is loaded ';
-    }
-});
-
-Route::post('/reg', function(){
-    if(Request::ajax()){
-        return Response::json(Request::all());
-    }
-
-});
 
     Auth::routes();
-    Route::post('/like','LikeController@like')->name('like') ;
+    Route::post('/addlike','LikeController@like')->name('like') ;
     Route::post('/adduser','UserController@adduser')->name('add_user');
     Route::get('/comment/{id?}','CommentController@index')->where(['id' => '[0-9]*'])->name('view_comment');
     Route::post('comment/create', 'CommentController@create')->name('comment.create');

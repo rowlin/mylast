@@ -18,7 +18,7 @@
     <div class="col-sm-4">
         <label for="start" class="control-label">Начало:</label>
        <div class="input-group">
-           <button type="button" class="btn btn-primary" onclick="today()" style="width: 100px;">Cегодня</button>
+           <button type="button" class="btn btn-primary" onclick="today()" id="addlike" style="width: 100px;">Cегодня</button>
        </div>
           <div class="input-group">
             <button type="button" class="btn btn-primary " onclick="tomorrow()" style="width: 100px;">Завтра</button>

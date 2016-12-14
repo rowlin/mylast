@@ -14,42 +14,42 @@ class LikeController extends Controller
     /*
      * Принимает id_ticket и id_user
      */
-    
 
-    public function like(){
-   //check if its our form
-        if ( Session::token() !== Input::get( '_token' ) ) {
-            return Response::json( array(
-                'msg' => 'Unauthorized attempt to create setting'
-            ) );
-        }
+    public function LikeCount($id) {
+        $like = Like::where('ticket_id' , $id)->count();
+        return $like;
+    }
 
+    public function CheckLikeCount()
+    {
+    }
 
+    public function like()
+    {
+        //check if its our form
+        if (Auth::check()) {
             $data = [
                 'ticket_id' => Input::get('ticket_id'),
                 'user_id' => Auth::id(),
             ];
-
-            if($data['user_id'] == null) {
-                return redirect('register')->with('message-alert', 'Зарегистрируйтесь');
-             }
             $liked = Like::where('user_id', $data['user_id'])->where('ticket_id', $data['ticket_id'])->first();
-            if($liked){
-                Like::where('id',$liked->id)->delete();
+            if ($liked) {
+                Like::where('id', $liked->id)->delete();
+                $count = $this->LikeCount($data['ticket_id']);
+                $msg = "-1 лайк";
+                return response()->json(array('msg' => $msg, 'count' => $count)  ,200);
 
-                    $msg = "Like -1";
-                return response()->json(array('msg'=> $msg), 200);
-
-
-
-                //return Redirect::back()->with('message', 'Liked -1');
-            }else {
+            } else {
                 Like::create($data);
-                //return Redirect::back()->with('message', 'Liked +1 ');
-
-                       $msg = "Like +1";
-                return response()->json(array('msg'=> $msg), 200);
+                $count = $this->LikeCount($data['ticket_id']);
+                $msg = "Cпасибо за лайк";
+                return response()->json(array('msg' => $msg, 'count' => $count), 200);
             }
+        }
+        else {
+            $msg = "Зарегайся, а потом лайкай)";
+            return response()->json(array('msg' => $msg), 200);
+        }
     }
 
 }
