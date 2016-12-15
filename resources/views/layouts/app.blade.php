@@ -42,7 +42,18 @@
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Вход</a></li>
                             <li><a href="{{ url('/register') }}">Регистрация</a></li>
-                            <li><a href="#">Город : {!!  Helper::getGeoLocation() !!}</a></li>
+                            <li class="dropdown">
+                                <a  href="#" data-toggle="dropdown" role="button" aria-expanded="false">Город : {!!  Helper::getGeoLocation("ru") !!}</a>
+                            </li>
+
+                            <ul class="dropdown-menu" id="sity-box"   role="menu">
+                            <h2>Ваш город {!!  Helper::getGeoLocation("ru") !!}</h2>
+                                <button type="button" onclick="setCookie('{!!  Helper::getGeoLocation("en") !!}')" >Да</button>
+                                <button type="button" data-toggle="modal" data-target="#myModal"> Нет</button>
+                            </ul>
+
+
+
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -69,7 +80,11 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="#">Город : {!!  Helper::getGeoLocation() !!}</a></li>
+                            <li class="dropdown"><a href="#">Город : {!!  Helper::getGeoLocation("ru") !!}</a></li>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="profile/change">Изменить город</a></li>
+                            </ul>
                         @endif
                     </ul>
                 </div>
@@ -102,12 +117,56 @@
             </div>
         </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Выберете город</h4>
+      </div>
+      <div class="modal-body">
+        <select>
+            <option value=" ">Санкт-Петербург</option>
+            <option>Москва</option>
+            <option>Таллинн</option>
+            <option>Нарва</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
         <!--errors-->
         @yield('content')
     </div>
     <!-- Scripts -->
     <script src="/js/all.js"></script>
     @yield('script')
+<script>
+    $(window).load(function() {
+        if(Cookies.get('sity') === null || Cookies.get('sity') === "" ){
+            $('#sity-box').css('display','block');
+            console.log('empty')
+        }else {
+            if (typeof Cookies.get('sity')==='undefined'){
+                $('#sity-box').css('display','block');
+                console.log(Cookies.get('sity'));
+            }
+            console.log('empty')
+        }
+    });
+
+    function setCookie(value) {
+      Cookies.set('sity', value);
+     $('#sity-box').css('display','none');
+    }
+
+
+    </script>
 
 </body>
 </html>

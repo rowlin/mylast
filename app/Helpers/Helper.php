@@ -24,22 +24,30 @@ class Helper {
         $comments_count = Comment::where('ticket_id' , $id)->count();
         return $comments_count;
     }
-    
 
-    static function getGeoLocation(){
-        if(Auth::check()){
+    static function getGeoLoc($val){
+        $ip = SypexGeo::get($_SERVER['REMOTE_ADDR']);
+        switch ($val){
+            case "ru" :
+            return $ip['city']['name_ru'];
+            case "en" :
+            return $ip['city']['name_en'];
+        }
+    }
+
+
+    static function getGeoLocation($val){
+        if(Auth::check()) {
             $user = User::findOrFail(Auth::id());
-            if($user->county == 0 and $user->sity == 0){
-                $ip = SypexGeo::get($_SERVER['REMOTE_ADDR']);
-                return $ip['city']['name_ru'];
-            }else 
+            if ($user->county == 0 and $user->sity == 0) {
+                $city = Helper::getGeoLoc($val);
+                return $city;
+            }else
                 return $user->country;
         }else{
-            $ip = SypexGeo::get($_SERVER['REMOTE_ADDR']);
-            return $ip['city']['name_ru'];
+            $city = Helper::getGeoLoc($val);
+            return $city;
         }
-
-        
     }
 
 

@@ -21,13 +21,15 @@ var paths = {
     'tags': '/bower_components/bootstrap-tagsinput/dist',
     'fontawesome': '/bower_components/font-awesome',
     'timepicker' :'/bower_components/bootstrap-timepicker',
-    'datetimepicker':'/bower_components/eonasdan-bootstrap-datetimepicker/build'
+    'datetimepicker':'/bower_components/eonasdan-bootstrap-datetimepicker/build',
+    'cookie': '/bower_components/js-cookie/src'
 }
 
 elixir(function(mix) {
 
     mix.scripts([
         paths.jquery + "/jquery.min.js",
+        paths.cookie + "/js.cookie.js",
         paths.moment + '/moment-with-locales.min.js',
         paths.datetimepicker + '/js/bootstrap-datetimepicker.min.js',
         paths.bootstrap + '/js/bootstrap.min.js',
