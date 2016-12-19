@@ -23,16 +23,16 @@ Route::get('/all', 'HomeController@all');
     Route::post('/adduser','UserController@adduser')->name('add_user');
     Route::get('/comment/{id?}','CommentController@index')->where(['id' => '[0-9]*'])->name('view_comment');
     Route::post('/comment/create', 'CommentController@create')->name('addcomment');
-
+    Route::post('/putcity','UserController@setcity');
 
 Route::group(['middleware => web'], function() {
+    
     Route::get('/admin', [
         'uses' => 'AdminController@admin',
         'as' => 'admin',
         'middleware' => 'roles',
         'roles'=> 'User'
     ]);
-
 
     Route::post('/admin/assign', [
         'uses' => 'AdminController@postAdminAssignRoles',

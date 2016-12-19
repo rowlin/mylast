@@ -43,10 +43,10 @@
                             <li><a href="{{ url('/login') }}">Вход</a></li>
                             <li><a href="{{ url('/register') }}">Регистрация</a></li>
                             <li class="dropdown">
-                                <a  href="#" data-toggle="dropdown" role="button" aria-expanded="false">Город : {!!  Helper::getGeoLocation("ru") !!}</a>
+                                <a href="" data-toggle="modal" id="city_display" data-target="#myModal"> Город : {!! Helper::getGeoLocation("en") !!}</a>
                             </li>
 
-                            <ul class="dropdown-menu" id="sity-box"   role="menu">
+                            <ul class="dropdown-menu" id="city-box"   role="menu">
                             <h2>Ваш город {!!  Helper::getGeoLocation("ru") !!}</h2>
                                 <button type="button" onclick="setCookie('{!!  Helper::getGeoLocation("en") !!}')" >Да</button>
                                 <button type="button" data-toggle="modal" data-target="#myModal"> Нет</button>
@@ -80,11 +80,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown"><a href="#">Город : {!!  Helper::getGeoLocation("ru") !!}</a></li>
+                            <li class="dropdown"><a href="" id="city_display" data-toggle="modal" data-target="#myModal" >Город : {!!  Helper::getGeoLocation("ru") !!}</a></li>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="profile/change">Изменить город</a></li>
-                            </ul>
                         @endif
                     </ul>
                 </div>
@@ -127,15 +124,15 @@
       </div>
       <div class="modal-body">
         <select>
-            <option value=" ">Санкт-Петербург</option>
-            <option>Москва</option>
-            <option>Таллинн</option>
-            <option>Нарва</option>
+            <option value="Sankt-peterburg">Санкт-Петербург</option>
+            <option value="Moscow">Москва</option>
+            <option value="Tallinn">Таллинн</option>
+            <option value="Narva">Нарва</option>
         </select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" onclick="setCookie($('select').val())" class="btn btn-primary">Сохранить изменения</button>
       </div>
     </div>
   </div>
@@ -147,24 +144,21 @@
     <script src="/js/all.js"></script>
     @yield('script')
 <script>
-    $(window).load(function() {
-        if(Cookies.get('sity') === null || Cookies.get('sity') === "" ){
-            $('#sity-box').css('display','block');
-            console.log('empty')
-        }else {
-            if (typeof Cookies.get('sity')==='undefined'){
-                $('#sity-box').css('display','block');
-                console.log(Cookies.get('sity'));
-            }
-            console.log('empty')
-        }
-    });
 
     function setCookie(value) {
-      Cookies.set('sity', value);
-     $('#sity-box').css('display','none');
+        $.ajax({
+            type: 'post',
+            url: 'putcity',
+            data:{
+                '_token': $('input[name= _token]').val(),
+                'city': value,
+            },
+            success:function (data) {
+                $('#city-box').css('display','none');
+                $('#city_display').text(value);
+            }
+        });
     }
-
 
     </script>
 

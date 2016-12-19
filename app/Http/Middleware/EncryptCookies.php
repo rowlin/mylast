@@ -11,7 +11,9 @@ class EncryptCookies extends BaseEncrypter
      *
      * @var array
      */
+    protected $fillable = ['test'];
+
     protected $except = [
-        //
+
     ];
 }

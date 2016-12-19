@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ticket;
 use Carbon\Carbon;
+use Session;
 
 class HomeController extends Controller
 {
@@ -36,7 +37,12 @@ class HomeController extends Controller
         return Carbon::parse(str_replace(array("\"", "[", "]"), "", $value))->format('d/m/Y');
     }
 
-    public function start(){
+    public function start($city = null ){
+        //установить локализацию  (расположен полльзователь)
+        if($city != null){
+            $t = Ticket::where('city', $city)->get();
+        }
+
         $t = Ticket::where('public', '1')->get();
         foreach ($t as $ticket){
             $start= $this->parse($ticket->start);

@@ -6,7 +6,9 @@ use App\Ticket;
 use App\Comment;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Session;
 use SypexGeo;
+use Illuminate\Cookie;
 
 class Helper {
     static function getLikeCount($id) {
@@ -35,17 +37,23 @@ class Helper {
         }
     }
 
-
     static function getGeoLocation($val){
         if(Auth::check()) {
             $user = User::findOrFail(Auth::id());
-            if ($user->county == 0 and $user->sity == 0) {
-                $city = Helper::getGeoLoc($val);
+            if(!$user->sity) {
+                $sity = Helper::getGeoLoc($val);
+                return $sity;
+            }else {
+                $city = $user->sity;
                 return $city;
-            }else
-                return $user->country;
-        }else{
+            }
+        }
+        else{
             $city = Helper::getGeoLoc($val);
+        if(!Session::has('city')){
+            Session::put('city', $city);
+        }else
+            $city = Session::get('city');
             return $city;
         }
     }

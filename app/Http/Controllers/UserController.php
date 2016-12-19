@@ -6,13 +6,25 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Ticket;
+use Session;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
 
-    public function update(Request $request){
+    public function setcity(Request $request){
+     if (Auth::check()){
+        $user= User::findOrFail(Auth::id());
+         $user->sity = $request->city;
+         $user->save();
+         Session::put('city', $request->city);
+     }else
+        Session::put('city', $request->city);
+    }
 
+
+    public function update(Request $request){
+        $id = Auth::id();
         $this->validate($request, [
         'name' => 'required',
         'age'  =>  'required',
@@ -21,7 +33,8 @@ class UserController extends Controller
         'phone' => 'required',
         ]);
         $input = $request->all();
-        User::fill($input)->save();
+        $user = User::findorfail($id);
+        $updateNow  = $user->update($input);
         $message ='Информация изменена';
         return redirect('profile');
     }

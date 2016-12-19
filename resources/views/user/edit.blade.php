@@ -9,6 +9,8 @@
                     <div class="panel-body">
                         <div class="col-md-4">
                             <img src="{{$user->img}}">
+                            <a href="">Мои тикеты:</a>
+                            <a href="">Комментарии:</a>
                         </div>
 
                         <div class="col-md-8">
@@ -48,8 +50,7 @@
                             <button class="btn" type="submit">Сохранить</button>
                                 {!! Form::close() !!}
 
-                            Мои тикеты:
-                            Комментарии:
+
                         </div>
                     </div>
                     <!-- The Current User Can't Update The Post -->

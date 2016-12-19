@@ -5,7 +5,6 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h1 style="text-align: center">Тикеты пользователя</h1><span><a href="{{url('ticket/create')}}">Создать тикет</a> </span>
-
                 @foreach($tickets as $ticket)
                     <section>
                         <h2>{{$ticket->name}}</h2>
@@ -17,11 +16,9 @@
                         {!! Form::open(['method' => 'DELETE','route' => ['ticket.destroy', $ticket->id],'style'=>'display:inline']) !!}
                         {!! Form::submit('Удалить', ['class' => 'btn btn-danger']) !!}
                         {!! Form::close() !!}
-
                         </div>
                     </section>
                 @endforeach
-
             </div>
         </div>
     </div>
